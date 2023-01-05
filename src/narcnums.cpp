@@ -4,14 +4,14 @@
 #include "util.h"
 #include "NumberGen.h"
 
-mpz_class powTable[20][20];
+mpz_class powTable[50][50];
 
 int main()
 {
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < 50; i++)
     {
         // mpz_class n = 1;
-        for (int j = 0; j < 20; j++)
+        for (int j = 0; j < 50; j++)
         {
             mpz_class n;
             mpz_ui_pow_ui(n.get_mpz_t(), i, j);
@@ -20,8 +20,9 @@ int main()
         }
     }
 
-    for (int r = 1; r < 13; r++)
+   for (int r = 21; r < 22; r++)
     {
+        std::cout << "r: " << r << std::endl;
         NumberGen numGen(r);
         auto a = numGen.nextNumber();
         while (a.has_value())

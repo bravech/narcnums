@@ -18,7 +18,7 @@ std::optional<std::vector<short>> NumberGen::nextNumber()
     if (!end)
         return {};
     int start = nums[i];
-    for (; i < nums.size(); i++)
+    for (; i < (int)nums.size(); i++)
     {
         nums[i] = start + 1;
     }
