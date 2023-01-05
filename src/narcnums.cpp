@@ -8,7 +8,7 @@
 
 int main()
 {
-    NumberGen numGen(5);
+    NumberGen numGen(3);
     auto a = numGen.nextNumber();
     while (a.has_value()) {
         std::cout << *a << std::endl;

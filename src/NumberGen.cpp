@@ -32,7 +32,7 @@ std::optional<mpz_class> NumberGen::nextNumber()
 
 NumberGen::NumberGen(int r)
 {
-    nums = std::vector<char>(r, MAX_R);
+    nums = std::vector<char>(r, 0);
     for (int i = 0; i < MAX_R; i++)
     {
         mpz_class n;
