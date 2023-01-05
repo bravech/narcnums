@@ -5,17 +5,18 @@
 
 #ifndef NumberGen_hpp
 #define NumberGen_hpp
-//template<size_t rows, size_t cols>
+// template<size_t rows, size_t cols>
 class NumberGen
 {
 public:
-    std::optional<mpz_class> nextNumber();
+    std::optional<std::vector<short>> nextNumber();
     NumberGen(const NumberGen &) = delete;
     NumberGen() = delete;
     NumberGen(int r);
+
 private:
     // Vector repr of base 10 number
-    std::vector<char> nums;
+    std::vector<short> nums;
     mpz_class powTable[30];
 };
 

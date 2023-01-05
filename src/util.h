@@ -28,7 +28,36 @@ bool sameDigitCounts(mpz_class a, mpz_class b)
     return true;
 }
 
-void printVec(std::vector<int> q)
+// Returns if two numbers have same count of digits
+bool sameDigitCounts(mpz_class a, std::vector<short> b)
+{
+    int aCounts[10] = {0};
+    int bCounts[10] = {0};
+    mpz_class ten(10);
+    while (a > 0)
+    {
+        mpz_class bigDig = a % ten;
+        short dig = bigDig.get_ui();
+        aCounts[dig]++;
+        a = a / 10;
+    }
+
+    for (size_t i = 0; i < b.size(); i++)
+    {
+        assert(b[i] < 10 && b[i] >= 0);
+        bCounts[b[i]]++;
+    }
+
+    for (int i = 0; i < 10; i++)
+    {
+        if (aCounts[i] != bCounts[i])
+            return false;
+    }
+    return true;
+}
+
+template <typename T>
+void printVec(std::vector<T> q)
 {
     std::cout << "(";
     for (auto c : q)
