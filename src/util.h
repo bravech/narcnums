@@ -1,4 +1,5 @@
 #include <gmpxx.h>
+#include <cassert>
 
 // Returns if two numbers have same count of digits
 bool sameDigitCounts(mpz_class a, mpz_class b)

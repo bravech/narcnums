@@ -5,7 +5,7 @@
 #include "util.h"
 #include "NumberGen.h"
 
-#define PARTITION_SIZE 100000000
+#define PARTITION_SIZE 10000000
 
 mpz_class powTable[50][50];
 
@@ -25,7 +25,7 @@ int main()
     std::vector<std::vector<char>> groups;
     std::cout << "done" << std::endl;
     groups.reserve(PARTITION_SIZE);
-
+#pragma omp parallel for
     for (int r = 1; r < 40; r++)
     {
         std::cout << "r: " << r << std::endl;
