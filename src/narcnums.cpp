@@ -22,13 +22,12 @@ int main()
             powTable[i][j] = n;
         }
     }
-    std::vector<std::vector<char>> groups;
     std::cout << "done" << std::endl;
-    groups.reserve(PARTITION_SIZE);
-#pragma omp parallel for
-    for (int r = 1; r < 40; r++)
+#pragma omp parallel for schedule(static, 1)
+    for (int r = 1; r < 20; r++)
     {
-        std::cout << "r: " << r << std::endl;
+        std::vector<std::vector<char>> groups;
+        groups.reserve(PARTITION_SIZE);
         NumberGen numGen(r);
         bool running = true;
         while (running)
@@ -43,7 +42,7 @@ int main()
             // if (!a.has_value()) running = false;
             running = a.has_value();
 
-            #pragma omp parallel for
+#pragma omp parallel for
             for (size_t i = 0; i < groups.size(); i++)
             {
                 auto &a = groups[i];
@@ -55,7 +54,7 @@ int main()
 
                 if (sameDigitCounts(n, a))
                 {
-                    std::cout << n << std::endl;
+                    std::cout << r << " " << n << std::endl;
                 }
             }
         }
