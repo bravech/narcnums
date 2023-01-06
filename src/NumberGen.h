@@ -9,14 +9,14 @@
 class NumberGen
 {
 public:
-    std::optional<std::vector<short>> nextNumber();
+    std::optional<std::vector<char>> nextNumber();
     NumberGen(const NumberGen &) = delete;
     NumberGen() = delete;
     NumberGen(int r);
 
 private:
     // Vector repr of base 10 number
-    std::vector<short> nums;
+    std::vector<char> nums;
     mpz_class powTable[30];
 };
 

@@ -29,7 +29,7 @@ bool sameDigitCounts(mpz_class a, mpz_class b)
 }
 
 // Returns if two numbers have same count of digits
-bool sameDigitCounts(mpz_class a, std::vector<short> b)
+bool sameDigitCounts(mpz_class a, std::vector<char> b)
 {
     int aCounts[10] = {0};
     int bCounts[10] = {0};

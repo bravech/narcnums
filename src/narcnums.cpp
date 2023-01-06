@@ -1,8 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <gmpxx.h>
+#include <omp.h>
 #include "util.h"
 #include "NumberGen.h"
+
+#define PARTITION_SIZE 100000000
 
 mpz_class powTable[50][50];
 
@@ -19,26 +22,42 @@ int main()
             powTable[i][j] = n;
         }
     }
+    std::vector<std::vector<char>> groups;
+    std::cout << "done" << std::endl;
+    groups.reserve(PARTITION_SIZE);
 
-   for (int r = 21; r < 22; r++)
+    for (int r = 1; r < 40; r++)
     {
         std::cout << "r: " << r << std::endl;
         NumberGen numGen(r);
-        auto a = numGen.nextNumber();
-        while (a.has_value())
+        bool running = true;
+        while (running)
         {
-            mpz_class n = 0;
-            for (size_t i = 0; i < a->size(); i++)
+            auto a = numGen.nextNumber();
+            groups.clear();
+            while (a.has_value() && groups.size() < PARTITION_SIZE)
             {
-                n += powTable[a->at(i)][a->size()];
+                groups.push_back(*a);
+                a = numGen.nextNumber();
             }
+            // if (!a.has_value()) running = false;
+            running = a.has_value();
 
-            if (sameDigitCounts(n, *a))
+            #pragma omp parallel for
+            for (size_t i = 0; i < groups.size(); i++)
             {
-                std::cout << n << std::endl;
-            }
+                auto &a = groups[i];
+                mpz_class n = 0;
+                for (size_t i = 0; i < a.size(); i++)
+                {
+                    n += powTable[a.at(i)][a.size()];
+                }
 
-            a = numGen.nextNumber();
+                if (sameDigitCounts(n, a))
+                {
+                    std::cout << n << std::endl;
+                }
+            }
         }
     }
 }

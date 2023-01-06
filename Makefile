@@ -1,4 +1,4 @@
-CXXFLAGS := -std=c++17 -Wall -lgmp -lgmpxx
+CXXFLAGS := -std=c++20 -Wall -lgmp -lgmpxx -Xpreprocessor -fopenmp -lomp
 
 # Set the includes for yourself
 INC := -I/opt/homebrew/Cellar/gmp/6.2.1_1/include -L/opt/homebrew/Cellar/gmp/6.2.1_1/lib

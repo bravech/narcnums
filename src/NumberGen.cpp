@@ -2,7 +2,7 @@
 #include <iostream>
 #define MAX_R 25 // Maximum length of number
 
-std::optional<std::vector<short>> NumberGen::nextNumber()
+std::optional<std::vector<char>> NumberGen::nextNumber()
 {
     int i = nums.size() - 1;
     bool end = false;
@@ -35,7 +35,7 @@ std::optional<std::vector<short>> NumberGen::nextNumber()
 
 NumberGen::NumberGen(int r)
 {
-    nums = std::vector<short>(r, 0);
+    nums = std::vector<char>(r, 0);
     for (int i = 0; i < MAX_R; i++)
     {
         mpz_class n;
