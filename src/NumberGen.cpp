@@ -23,14 +23,6 @@ std::optional<std::vector<char>> NumberGen::nextNumber()
         nums[i] = start + 1;
     }
     return nums;
-    // mpz_class num(0);
-    // for (size_t i = 0; i < nums.size(); i++)
-    // {
-    //     mpz_class b;
-    //     mpz_ui_pow_ui(b.get_mpz_t(), 10, i);
-    //     num += nums[i] * b;
-    // }
-    // return num;
 }
 
 NumberGen::NumberGen(int r)

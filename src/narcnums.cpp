@@ -9,25 +9,31 @@
 
 mpz_class powTable[50][50];
 
+mpz_class NarcOp(DigitCounts const &a, int r)
+{
+    mpz_class n = 0;
+    for (size_t i = 0; i < a.size(); i++)
+    {
+        n += powTable[i][r] * a[i];
+    }
+    return n;
+}
+
 int main()
 {
     for (int i = 0; i < 50; i++)
     {
-        // mpz_class n = 1;
         for (int j = 0; j < 50; j++)
         {
             mpz_class n;
             mpz_ui_pow_ui(n.get_mpz_t(), i, j);
-            // n = n * i;
             powTable[i][j] = n;
         }
     }
-    std::cout << "done" << std::endl;
-#pragma omp parallel for schedule(static, 1)
+    std::vector<std::array<char, 10>> groups;
+    groups.reserve(PARTITION_SIZE);
     for (int r = 1; r < 20; r++)
     {
-        std::vector<std::vector<char>> groups;
-        groups.reserve(PARTITION_SIZE);
         NumberGen numGen(r);
         bool running = true;
         while (running)
@@ -36,23 +42,20 @@ int main()
             groups.clear();
             while (a.has_value() && groups.size() < PARTITION_SIZE)
             {
-                groups.push_back(*a);
+                groups.emplace_back(getDigitCounts(*a));
                 a = numGen.nextNumber();
             }
-            // if (!a.has_value()) running = false;
             running = a.has_value();
 
-#pragma omp parallel for
+            #pragma omp parallel for
             for (size_t i = 0; i < groups.size(); i++)
             {
-                auto &a = groups[i];
-                mpz_class n = 0;
-                for (size_t i = 0; i < a.size(); i++)
-                {
-                    n += powTable[a.at(i)][a.size()];
-                }
+                auto & a = groups[i];
 
-                if (sameDigitCounts(n, a))
+                auto n = NarcOp(a, r);
+                auto nCount = getDigitCounts(n);
+
+                if (nCount == a)
                 {
                     std::cout << r << " " << n << std::endl;
                 }
