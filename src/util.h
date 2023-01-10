@@ -73,12 +73,10 @@ DigitCounts getDigitCounts(std::vector<char> const &num)
 DigitCounts getDigitCounts(mpz_class a)
 {
     DigitCounts out{};
-    while (a > 0)
+    auto aStr = a.get_str();
+    for (char c : aStr)
     {
-        mpz_class bigDig = a % 10;
-        short dig = bigDig.get_ui();
-        out[dig]++;
-        a = a / 10;
+        out[c - '0']++;
     }
     return out;
 }

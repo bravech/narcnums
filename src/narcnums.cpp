@@ -5,7 +5,7 @@
 #include "util.h"
 #include "NumberGen.h"
 
-#define PARTITION_SIZE 10000000
+#define PARTITION_SIZE 100000000
 
 mpz_class powTable[50][50];
 
@@ -32,7 +32,7 @@ int main()
     }
     std::vector<std::array<char, 10>> groups;
     groups.reserve(PARTITION_SIZE);
-    for (int r = 1; r < 20; r++)
+    for (int r = 1; r < 40; r++)
     {
         NumberGen numGen(r);
         bool running = true;
